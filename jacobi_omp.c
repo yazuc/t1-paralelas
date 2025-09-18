@@ -105,20 +105,19 @@ int main(int argc, char** argv){
         
         gDiffNorm = sqrt(gDiffNorm);  //terminamos o cálculo do gDiffNorm tirando a raiz quadrada da soma dos quadrados das diferenças
         
-    } while (gDiffNorm > epsilon && itrCount < maxIterations);  //keep doing Jacobi iterations until we hit our iteration or precision limit
+    } while (gDiffNorm > epsilon && itrCount < maxIterations);  //continua até que o erro seja menor que a tolerância ou o número máximo de iterações seja atingido
 
 
-    stop = omp_get_wtime(); //stop the timer
+    stop = omp_get_wtime(); //para o contador de tempo
 
+    //printa o número de iterações e o tempo gasto
     printf("%d Jacobi iterations took %f seconds.\n", itrCount, stop - start);
 
-    // writeToPPM(xFull, itrCount, MESHSIZE);
-
-    //free our dynamic memory
+    //libera a memória alocada
     free(xNew);
     free(xFull);
 
-    //display normal termination message and exit
+    //printa que o codigo terminou normalmente
     printf("<normal termination>\n");
     return 0;
 }
