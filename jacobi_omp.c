@@ -8,7 +8,7 @@
 void printMesh(float* meshArray, const int MESHSIZE);
 
 int main(int argc, char** argv){
-    const int MESHSIZE = 2048;                //tamanho da malha a ser computada
+    const int MESHSIZE = 2880;                //tamanho da malha a ser computada
 
     const float NORTH_BOUND = 100.0;        //Valor de limite norte para a malha
     const float SOUTH_BOUND = 100.0;        //Valor de limite sul para a malha
