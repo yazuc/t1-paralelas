@@ -1,5 +1,10 @@
-// gcc -O2 MCpi_sequencial.c -o MCpi_sequencial -lm
-// ./MCpi_sequencial
+// gcc -fopenmp MCpi_sequencial.c -o MCpi_sequencial.exe
+// 
+// srun -N 1 -n 1 --exclusive MCpi_sequencial.exe
+// [SEQUENCIAL] Iniciando cálculo de PI com 10000000000 pontos...
+// [SEQUENCIAL] PI ≈ 3.141566
+// [SEQUENCIAL] Tempo total (T1) = 370 segundos
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,16 +13,9 @@
 
 #define SEED 314159
 
-// Função para medir tempo de execução em segundos
-double get_time() {
-    struct timespec t;
-    clock_gettime(CLOCK_MONOTONIC, &t);
-    return t.tv_sec + t.tv_nsec / 1e9;
-}
-
 int main(int argc, char* argv[]) {
-    long total_tasks = 100;        // número de blocos (mesmo do paralelo)
-    long points_per_task = 100000; // pontos por bloco
+    long total_tasks = 10000;        // número de blocos (mesmo do paralelo)
+    long points_per_task = 1000000;  // pontos por bloco
     long total_points = total_tasks * points_per_task;
     long total_in_circle = 0;
 
@@ -25,7 +23,7 @@ int main(int argc, char* argv[]) {
 
     printf("[SEQUENCIAL] Iniciando cálculo de PI com %ld pontos...\n", total_points);
 
-    double start = get_time();
+    time_t tempo_inicial = time(NULL);
 
     for (long t = 0; t < total_tasks; t++) {
         for (long i = 0; i < points_per_task; i++) {
@@ -36,13 +34,13 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    double end = get_time();
-    double elapsed = end - start;
+    time_t tempo_final = time(NULL);
+    long duracao = tempo_final - tempo_inicial;
 
     double pi = 4.0 * ((double)total_in_circle / (double)total_points);
 
     printf("[SEQUENCIAL] PI ≈ %.6f\n", pi);
-    printf("[SEQUENCIAL] Tempo total (T1) = %.6f segundos\n", elapsed);
+    printf("[SEQUENCIAL] Tempo total (T1) = %ld segundos\n", duracao);
 
     return 0;
 }
