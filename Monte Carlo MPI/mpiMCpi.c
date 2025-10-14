@@ -13,9 +13,9 @@
 
 int main(int argc, char* argv[]) {
     int myid, numnodes;
-    long total_tasks = 100;     // número de blocos de trabalho
-    long points_per_task = 100000;  // número de pontos por bloco
-    long next_task = 0;         // índice do próximo bloco a distribuir
+    long total_tasks = 10000;        // número de blocos de trabalho
+    long points_per_task = 1000000;  // número de pontos por bloco
+    long next_task = 0;              // índice do próximo bloco a distribuir
     double pi = 0.0;
     MPI_Status status;
 
