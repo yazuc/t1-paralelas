@@ -16,8 +16,8 @@
 
 int main(int argc, char* argv[]) {
     int myid, numnodes;
-    long base_tasks = 100;
-    long points_per_task = 100000;
+    long base_tasks = 10000;
+    long points_per_task = 1000000;
     long total_tasks;
     long next_task = 0;
     double pi = 0.0;
@@ -150,3 +150,4 @@ int main(int argc, char* argv[]) {
     MPI_Finalize();
     return 0;
 }
+
