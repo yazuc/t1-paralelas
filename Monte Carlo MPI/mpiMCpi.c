@@ -1,4 +1,25 @@
-// mpirun -np 4 ./mpiMCpi
+// ladcomp -env mpicc mpiMCpi.c -o mpiMCpi
+// 
+// Executando em 1 máquina (N) com 2 processos no total (n) de forma exclusiva
+// srun -N 1 -n 2 --exclusive mpiMCpi
+// [MASTER] PI ≈ 3.141610 com 10000000000 pontos (10000 tarefas)
+// Tempo de execucao: 523.728015
+//
+// Executando em 2 máquinas (N) com 4 processos no total (n) de forma exclusiva
+// srun -N 2 -n 4 --exclusive mpiMCpi
+// [MASTER] PI ≈ 3.141611 com 10000000000 pontos (10000 tarefas)
+// Tempo de execucao: 175.289782
+//
+// Executando em 4 máquinas (N) com 8 processos no total (n) de forma exclusiva
+// srun -N 4 -n 8 --exclusive mpiMCpi
+// [MASTER] PI ≈ 3.141622 com 10000000000 pontos (10000 tarefas)
+// Tempo de execucao: 75.257867
+//
+// Executando em 8 máquinas (N) com 16 processos no total (n) de forma exclusiva
+// srun -N 8 -n 16 --exclusive mpiMCpi
+// [MASTER] PI ≈ 3.141636 com 10000000000 pontos (10000 tarefas)
+// Tempo de execucao: 34.384654
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,6 +38,7 @@ int main(int argc, char* argv[]) {
     long points_per_task = 1000000;  // número de pontos por bloco
     long next_task = 0;              // índice do próximo bloco a distribuir
     double pi = 0.0;
+    double t1, t2;
     MPI_Status status;
 
     MPI_Init(&argc, &argv);
@@ -24,6 +46,8 @@ int main(int argc, char* argv[]) {
     MPI_Comm_size(MPI_COMM_WORLD, &numnodes);
 
     srand(SEED + myid);
+
+    t1 = MPI_Wtime();  // inicia a contagem do tempo
 
     if (myid == 0) {
         // ========== MESTRE ==========
@@ -58,6 +82,10 @@ int main(int argc, char* argv[]) {
         long total_points = total_tasks * points_per_task;
         pi = 4.0 * ((double)total_in_circle / (double)total_points);
         printf("\n[MASTER] PI ≈ %.6f com %ld pontos (%ld tarefas)\n", pi, total_points, total_tasks);
+
+        t2 = MPI_Wtime();  // termina a contagem do tempo
+
+        printf("\nTempo de execucao: %f\n\n", t2 - t1);
     }
 
     else {
