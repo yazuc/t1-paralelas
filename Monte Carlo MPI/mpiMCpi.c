@@ -1,5 +1,6 @@
 // ladcomp -env mpicc mpiMCpi.c -o mpiMCpi
 // 
+// SPEED UP FORTE:
 // Executando em 1 máquina (N) com 2 processos no total (n) de forma exclusiva
 // srun -N 1 -n 2 --exclusive mpiMCpi
 // [MASTER] PI ≈ 3.141610 com 10000000000 pontos (10000 tarefas)
@@ -20,6 +21,27 @@
 // [MASTER] PI ≈ 3.141636 com 10000000000 pontos (10000 tarefas)
 // Tempo de execucao: 34.384654
 
+// SPEED UP FRACO
+// Executando em 1 máquina (N) com 2 processos no total (n) de forma exclusiva
+// srun -N 1 -n 2 --exclusive mpiMCpi weak
+// [MASTER] PI ≈ 3.141596 com 20000000000 pontos (20000 tarefas)
+// Tempo de execucao: 1047.711694
+//
+// Executando em 2 máquinas (N) com 4 processos no total (n) de forma exclusiva
+// srun -N 2 -n 4 --exclusive mpiMCpi weak
+// [MASTER] PI ≈ 3.141603 com 40000000000 pontos (40000 tarefas)
+// Tempo de execucao: 701.971534
+//
+// Executando em 4 máquinas (N) com 8 processos no total (n) de forma exclusiva
+// srun -N 4 -n 8 --exclusive mpiMCpi weak
+// [MASTER] PI ≈ 3.141596 com 80000000000 pontos (80000 tarefas)
+// Tempo de execucao: 603.458980
+//
+// Executando em 8 máquinas (N) com 16 processos no total (n) de forma exclusiva
+// srun -N 8 -n 16 --exclusive mpiMCpi weak
+// [MASTER] PI ≈ 3.141599 com 160000000000 pontos (160000 tarefas)
+// Tempo de execucao: 551.793145
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,7 +56,8 @@
 
 int main(int argc, char* argv[]) {
     int myid, numnodes;
-    long total_tasks = 10000;        // número de blocos de trabalho
+    long total_tasks;
+    long base_tasks = 10000;        // número de blocos de trabalho
     long points_per_task = 1000000;  // número de pontos por bloco
     long next_task = 0;              // índice do próximo bloco a distribuir
     double pi = 0.0;
@@ -46,6 +69,18 @@ int main(int argc, char* argv[]) {
     MPI_Comm_size(MPI_COMM_WORLD, &numnodes);
 
     srand(SEED + myid);
+
+    // Se o usuário passar "weak" como argumento, o problema cresce com numnodes
+    int weak_scaling = 0;
+    if (argc > 1 && strcmp(argv[1], "weak") == 0) {
+        weak_scaling = 1;
+    }
+
+    if (weak_scaling) {
+        total_tasks = base_tasks * numnodes; // cresce com o número de processos
+    } else {
+        total_tasks = base_tasks;             // fixo (strong scaling)
+    }
 
     t1 = MPI_Wtime();  // inicia a contagem do tempo
 
