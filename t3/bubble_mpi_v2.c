@@ -78,8 +78,8 @@ int main(int argc, char *argv[]) {
         MPI_Send(&vetor[metade], metade, MPI_INT, 2, 0, MPI_COMM_WORLD);  // Envia metade para o filho 2
 
         // Recebe as metades ordenadas dos filhos
-        MPI_Recv(vetor, metade, MPI_INT, 1, 0, MPI_COMM_WORLD, &Status);
-        MPI_Recv(vetor + metade, metade, MPI_INT, 2, 0, MPI_COMM_WORLD, &Status);
+        MPI_Recv(&vetor[0], metade, MPI_INT, 1, 0, MPI_COMM_WORLD, &Status);
+        MPI_Recv(&vetor[metade] , metade, MPI_INT, 2, 0, MPI_COMM_WORLD, &Status);
 
         // Intercala os vetores recebidos
         interleaving(vetor, size);
