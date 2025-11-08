@@ -1,0 +1,15 @@
+
+
+
+ladcomp -env mpicc bubel.c -o  bubel
+
+
+srun -N 2 -n 1 ./bubel --exclusive
+
+srun -N 2 -n 3 ./bubel --exclusive
+
+srun -N 2 -n 7 ./bubel --exclusive
+
+srun -N 2 -n 15 ./bubel --exclusive
+
+srun -N 2 -n 31 ./bubel --exclusive
