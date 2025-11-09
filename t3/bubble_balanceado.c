@@ -178,17 +178,19 @@ mergesort_parallel_mpi (int a[], int size, int temp[],
 //printf("Process %d has helper %d\n", my_rank, helper_rank);
       MPI_Request request;
       MPI_Status status;
-      // Send second half, asynchronous
       MPI_Isend (a + size / 2, size - size / 2, MPI_INT, helper_rank, tag,
-		 comm, &request);
-      // Sort first half
+                 comm, &request);
+
+      /* Sort first half while send is in-flight */
       mergesort_parallel_mpi (a, size / 2, temp, level + 1, my_rank, max_rank,
-			      tag, comm);
-      // Free the async request (matching receive will complete the transfer).
-      MPI_Request_free (&request);
-      // Receive second half sorted
+                              tag, comm);
+
+      /* Wait for the non-blocking send to complete BEFORE proceeding */
+      MPI_Wait(&request, &status);
+
+      /* Now receive the sorted second half */
       MPI_Recv (a + size / 2, size - size / 2, MPI_INT, helper_rank, tag,
-		comm, &status);
+                comm, &status);
       // Merge the two sorted sub-arrays through temp
       merge (a, size, temp);
     }
