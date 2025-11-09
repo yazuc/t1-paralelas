@@ -107,6 +107,7 @@ main (int argc, char *argv[])
       run_helper_mpi (my_rank, max_rank, tag, MPI_COMM_WORLD);
     }
   fflush (stdout);
+  MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize ();
   return 0;
 }
