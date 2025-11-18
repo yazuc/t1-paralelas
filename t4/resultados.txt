@@ -98,3 +98,47 @@ Jacobi (MPI) - Modelo de Fases Paralelas com Alltoall
 Convergência atingida em 7000 iterações (25.488940 s)
 <normal termination>
 
+cp06@atlantica:~/t4$ srun -N 2 -n 32 --exclusive ./jacobi_fases 1e-4 20000Jacobi (MPI) - Modelo de Fases Paralelas com Alltoall
+[Iter 500] Local diff = 4.054561e+00 | Pronto = 0
+[Iter 1000] Local diff = 2.308957e+00 | Pronto = 0
+[Iter 1500] Local diff = 1.603741e+00 | Pronto = 0
+[Iter 2000] Local diff = 1.203340e+00 | Pronto = 0
+[Iter 2500] Local diff = 9.452626e-01 | Pronto = 0
+[Iter 3000] Local diff = 7.672637e-01 | Pronto = 0
+[Iter 3500] Local diff = 6.382989e-01 | Pronto = 0
+[Iter 4000] Local diff = 5.411123e-01 | Pronto = 0
+[Iter 4500] Local diff = 4.661559e-01 | Pronto = 0
+[Iter 5000] Local diff = 4.067575e-01 | Pronto = 0
+[Iter 5500] Local diff = 3.587455e-01 | Pronto = 0
+[Iter 6000] Local diff = 3.194058e-01 | Pronto = 0
+[Iter 6500] Local diff = 2.865760e-01 | Pronto = 0
+[Iter 7000] Local diff = 2.590739e-01 | Pronto = 0
+[Iter 7500] Local diff = 2.354166e-01 | Pronto = 0
+[Iter 8000] Local diff = 2.150333e-01 | Pronto = 0
+[Iter 8500] Local diff = 1.977461e-01 | Pronto = 0
+[Iter 9000] Local diff = 1.822197e-01 | Pronto = 0
+[Iter 9500] Local diff = 1.688841e-01 | Pronto = 0
+[Iter 10000] Local diff = 1.569195e-01 | Pronto = 0
+[Iter 10500] Local diff = 1.462984e-01 | Pronto = 0
+[Iter 11000] Local diff = 1.367660e-01 | Pronto = 0
+[Iter 11500] Local diff = 1.282136e-01 | Pronto = 0
+[Iter 12000] Local diff = 1.205529e-01 | Pronto = 0
+[Iter 12500] Local diff = 1.134114e-01 | Pronto = 0
+[Iter 13000] Local diff = 1.071475e-01 | Pronto = 0
+[Iter 13500] Local diff = 1.013141e-01 | Pronto = 0
+[Iter 14000] Local diff = 9.602409e-02 | Pronto = 0
+[Iter 14500] Local diff = 9.123921e-02 | Pronto = 0
+[Iter 15000] Local diff = 8.668964e-02 | Pronto = 0
+[Iter 15500] Local diff = 8.249918e-02 | Pronto = 0
+[Iter 16000] Local diff = 7.871791e-02 | Pronto = 0
+[Iter 16500] Local diff = 7.514524e-02 | Pronto = 0
+[Iter 17000] Local diff = 7.177539e-02 | Pronto = 0
+[Iter 17500] Local diff = 6.881567e-02 | Pronto = 0
+[Iter 18000] Local diff = 6.594313e-02 | Pronto = 0
+[Iter 18500] Local diff = 6.324609e-02 | Pronto = 0
+[Iter 19000] Local diff = 6.065077e-02 | Pronto = 0
+[Iter 19500] Local diff = 5.828593e-02 | Pronto = 0
+[Iter 20000] Local diff = 5.608170e-02 | Pronto = 0
+
+Convergência atingida em 20000 iterações (73.442325 s)
+<normal termination>
