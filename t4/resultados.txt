@@ -142,3 +142,10 @@ cp06@atlantica:~/t4$ srun -N 2 -n 32 --exclusive ./jacobi_fases 1e-4 20000Jacobi
 
 Convergência atingida em 20000 iterações (73.442325 s)
 <normal termination>
+
+
+Tempo de execução sequencial com só 1 processo MESHSIZE = 45000:
+eduardopretto@Eduardos-MacBook-Pro-2 t1-paralelas % ./jacobi-omp 1e-5 1 1
+1 Jacobi iterations took 18.723392 seconds.
+<normal termination>
+
